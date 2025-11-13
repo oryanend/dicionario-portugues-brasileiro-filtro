@@ -6,8 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class DicionarioFiltroApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(DicionarioFiltroApplication.class, args);
-    }
-
+  public static void main(String[] args) {
+    SpringApplication.run(DicionarioFiltroApplication.class, args);
+  }
 }
