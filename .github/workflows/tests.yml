@@ -15,4 +15,4 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      - run: mvn surefire:test
+      - run: mvn test

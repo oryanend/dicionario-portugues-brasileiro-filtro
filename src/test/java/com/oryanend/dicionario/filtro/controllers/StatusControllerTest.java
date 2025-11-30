@@ -21,7 +21,7 @@ public class StatusControllerTest {
   @Autowired private MockMvc mockMvc;
 
   @Test
-  public void getStatusShouldReturn200() throws Exception {
+  public void getStatusShouldReturnStatusCodeOK() throws Exception {
     ResultActions result = mockMvc.perform(get("/status").accept(MediaType.APPLICATION_JSON));
 
     result
