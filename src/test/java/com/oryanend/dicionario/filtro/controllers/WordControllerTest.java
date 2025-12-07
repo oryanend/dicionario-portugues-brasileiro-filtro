@@ -51,6 +51,24 @@ public class WordControllerTest {
         .andExpect(jsonPath("$.word", hasLengthLessOrEqualTo(wordSize)));
   }
 
+  @Test
+  public void getWordsSizeWhenSizeNotFoundReturnStatusCodeNotFound() throws Exception {
+    int wordSize = 2;
+
+    ResultActions result =
+        mockMvc.perform(get("/words?wordSize=" + wordSize).accept(MediaType.APPLICATION_JSON));
+
+    result
+        .andExpect(status().isNotFound())
+        .andExpect(jsonPath("$.error").value("Resource not found"))
+        .andExpect(
+            jsonPath("$.message")
+                .value("Não foi possível encontrar uma palavra com o tamanho máximo especificado."))
+        .andExpect(jsonPath("$.status").value(404))
+        .andExpect(jsonPath("$.path").value("/words"))
+        .andExpect(jsonPath("$.timestamp").exists());
+  }
+
   private Matcher<Object> hasLengthLessOrEqualTo(int max) {
     return new TypeSafeMatcher<>() {
       @Override
