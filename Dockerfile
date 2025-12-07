@@ -5,6 +5,7 @@ FROM maven:3.9.5-eclipse-temurin-21-alpine AS build
 COPY . .
 RUN mvn clean install -DskipTests
 
+ENV SPRING_PROFILES_ACTIVE=prod
 #
 # Package stage
 #
