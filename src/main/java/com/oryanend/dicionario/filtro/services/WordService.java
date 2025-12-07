@@ -2,6 +2,7 @@ package com.oryanend.dicionario.filtro.services;
 
 import com.oryanend.dicionario.filtro.entities.Word;
 import com.oryanend.dicionario.filtro.repositories.WordRepository;
+import com.oryanend.dicionario.filtro.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,15 +10,20 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class WordService {
 
-  @Autowired private WordRepository wordRepository;
+  @Autowired private WordRepository repository;
 
   @Transactional(readOnly = true)
   public Word getRandomWord() {
-    return wordRepository.findRandomWord();
+    return repository.findRandomWord();
   }
 
   @Transactional(readOnly = true)
   public Word getRandomWordByMaxCharSize(int wordSize) {
-    return wordRepository.findRandomWordByMaxCharSize(wordSize);
+    return repository
+        .findRandomWordByMaxCharSize(wordSize)
+        .orElseThrow(
+            () ->
+                new ResourceNotFoundException(
+                    "Não foi possível encontrar uma palavra com o tamanho máximo especificado."));
   }
 }

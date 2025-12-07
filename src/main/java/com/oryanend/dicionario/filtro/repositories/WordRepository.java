@@ -1,6 +1,7 @@
 package com.oryanend.dicionario.filtro.repositories;
 
 import com.oryanend.dicionario.filtro.entities.Word;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,5 +16,5 @@ public interface WordRepository extends JpaRepository<Word, Long> {
   @Query(
       value = "SELECT * FROM words w WHERE LENGTH(w.word) <= :wordSize ORDER BY RANDOM() LIMIT 1",
       nativeQuery = true)
-  Word findRandomWordByMaxCharSize(@Param("wordSize") int wordSize);
+  Optional<Word> findRandomWordByMaxCharSize(@Param("wordSize") int wordSize);
 }
