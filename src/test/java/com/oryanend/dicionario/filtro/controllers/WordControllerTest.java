@@ -38,25 +38,25 @@ public class WordControllerTest {
 
   @Test
   public void getWordsWithSizeShouldReturnWordSorted() throws Exception {
-    int wordSize = 6;
+    int maxChar = 6;
 
     ResultActions result =
-        mockMvc.perform(get("/words?wordSize=" + wordSize).accept(MediaType.APPLICATION_JSON));
+        mockMvc.perform(get("/words?maxChar=" + maxChar).accept(MediaType.APPLICATION_JSON));
 
     result
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.word").isNotEmpty())
         .andExpect(jsonPath("$.word").isString())
         .andExpect(jsonPath("$.word").exists())
-        .andExpect(jsonPath("$.word", hasLengthLessOrEqualTo(wordSize)));
+        .andExpect(jsonPath("$.word", hasLengthLessOrEqualTo(maxChar)));
   }
 
   @Test
   public void getWordsSizeWhenSizeNotFoundReturnStatusCodeNotFound() throws Exception {
-    int wordSize = 2;
+    int maxChar = 2;
 
     ResultActions result =
-        mockMvc.perform(get("/words?wordSize=" + wordSize).accept(MediaType.APPLICATION_JSON));
+        mockMvc.perform(get("/words?maxChar=" + maxChar).accept(MediaType.APPLICATION_JSON));
 
     result
         .andExpect(status().isNotFound())

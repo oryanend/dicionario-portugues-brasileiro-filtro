@@ -1,10 +1,11 @@
-INSERT INTO words (id, word) VALUES (1, 'apple'),
+INSERT INTO words (id, word) VALUES
+(1, 'abacate'),
 (2, 'banana'),
-(3, 'cherry'),
-(4, 'date'),
-(5, 'elderberry'),
-(6, 'fig'),
-(7, 'grape'),
-(8, 'honeydew'),
-(9, 'kiwi'),
-(10, 'lemon');
+(3, 'cereja'),
+(4, 'damasco'),
+(5, 'embaúba'),
+(6, 'figo'),
+(7, 'goiaba'),
+(8, 'hortelã'),
+(9, 'ingá'),
+(10, 'limão');

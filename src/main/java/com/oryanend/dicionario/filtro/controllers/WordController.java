@@ -17,9 +17,9 @@ public class WordController {
 
   @GetMapping
   public ResponseEntity<WordDTO> getRandomWord(
-      @RequestParam(required = false, defaultValue = "0") int wordSize) {
-    if (wordSize > 0) {
-      WordDTO dto = new WordDTO(wordService.getRandomWordByMaxCharSize(wordSize));
+      @RequestParam(required = false, defaultValue = "0") int maxChar) {
+    if (maxChar > 0) {
+      WordDTO dto = new WordDTO(wordService.getRandomWordByMaxCharSize(maxChar));
       return ResponseEntity.ok().body(dto);
     }
     WordDTO dto = new WordDTO(wordService.getRandomWord());

@@ -18,9 +18,9 @@ public class WordService {
   }
 
   @Transactional(readOnly = true)
-  public Word getRandomWordByMaxCharSize(int wordSize) {
+  public Word getRandomWordByMaxCharSize(int maxChar) {
     return repository
-        .findRandomWordByMaxCharSize(wordSize)
+        .findRandomWordByMaxCharSize(maxChar)
         .orElseThrow(
             () ->
                 new ResourceNotFoundException(
