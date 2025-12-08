@@ -102,6 +102,54 @@ public class WordControllerTest {
         .andExpect(jsonPath("$.timestamp").exists());
   }
 
+  @Test
+  public void getWordsCharSizeShouldReturnWordEqualToCharSize() throws Exception {
+    int charSize = 7;
+
+    ResultActions result =
+        mockMvc.perform(get("/words?charSize=" + charSize).accept(MediaType.APPLICATION_JSON));
+
+    result
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.word").isNotEmpty())
+        .andExpect(jsonPath("$.word").isString())
+        .andExpect(jsonPath("$.word").exists())
+        .andExpect(jsonPath("$.word", equalLength(charSize)));
+  }
+
+  @Test
+  public void getWordsCharSizeWhenCharSizeNotFoundShouldThrowNotFoundException() throws Exception {
+    int charSize = 12;
+
+    ResultActions result =
+        mockMvc.perform(get("/words?charSize=" + charSize).accept(MediaType.APPLICATION_JSON));
+
+    result
+        .andExpect(status().isNotFound())
+        .andExpect(jsonPath("$.error").value("Resource not found"))
+        .andExpect(
+            jsonPath("$.message")
+                .value("Não foi possível encontrar uma palavra com o tamanho máximo especificado."))
+        .andExpect(jsonPath("$.status").value(404))
+        .andExpect(jsonPath("$.path").value("/words"))
+        .andExpect(jsonPath("$.timestamp").exists());
+  }
+
+  public static Matcher<String> equalLength(int length) {
+    return new TypeSafeMatcher<>() {
+
+      @Override
+      public void describeTo(Description description) {
+        description.appendText("string length equal to " + length);
+      }
+
+      @Override
+      protected boolean matchesSafely(String item) {
+        return item != null && item.length() == length;
+      }
+    };
+  }
+
   private Matcher<Object> hasLengthLessOrEqualTo(int max) {
     return new TypeSafeMatcher<>() {
       @Override
