@@ -17,4 +17,9 @@ public interface WordRepository extends JpaRepository<Word, Long> {
       value = "SELECT * FROM words w WHERE LENGTH(w.word) <= :maxChar ORDER BY RANDOM() LIMIT 1",
       nativeQuery = true)
   Optional<Word> findRandomWordByMaxCharSize(@Param("maxChar") int maxChar);
+
+  @Query(
+      value = "SELECT * FROM words w WHERE LENGTH(w.word) >= :minChar ORDER BY RANDOM() LIMIT 1",
+      nativeQuery = true)
+  Optional<Word> findRandomWordByMinCharSize(@Param("minChar") int minChar);
 }
