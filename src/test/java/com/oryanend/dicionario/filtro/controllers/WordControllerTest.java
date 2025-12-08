@@ -26,7 +26,7 @@ public class WordControllerTest {
   @Autowired private MockMvc mockMvc;
 
   @Test
-  public void getWordsShouldReturnStatusCodeOK() throws Exception {
+  public void getWordsShouldReturnRandomWord() throws Exception {
     ResultActions result = mockMvc.perform(get("/words").accept(MediaType.APPLICATION_JSON));
 
     result
@@ -37,7 +37,7 @@ public class WordControllerTest {
   }
 
   @Test
-  public void getWordsWithSizeShouldReturnWordSorted() throws Exception {
+  public void getWordsMaxCharShouldReturnWordLessOrEqualToMaxChar() throws Exception {
     int maxChar = 6;
 
     ResultActions result =
@@ -52,7 +52,7 @@ public class WordControllerTest {
   }
 
   @Test
-  public void getWordsSizeWhenSizeNotFoundReturnStatusCodeNotFound() throws Exception {
+  public void getWordsMaxCharWhenMaxCharNotFoundShouldThrowNotFoundException() throws Exception {
     int maxChar = 2;
 
     ResultActions result =
