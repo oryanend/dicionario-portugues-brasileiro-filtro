@@ -25,6 +25,9 @@ public class WordControllerTest {
 
   @Autowired private MockMvc mockMvc;
 
+  private static final String INVALID_PARAMS_ERROR_MESSAGE =
+      "Apenas um parâmetro de filtro pode ser usado por vez (maxChar, minChar ou charSize).";
+
   @Test
   public void getWordsShouldReturnRandomWord() throws Exception {
     ResultActions result = mockMvc.perform(get("/words").accept(MediaType.APPLICATION_JSON));
@@ -186,10 +189,7 @@ public class WordControllerTest {
     result
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$.error").value("Invalid parameter"))
-        .andExpect(
-            jsonPath("$.message")
-                .value(
-                    "Apenas um parâmetro de filtro pode ser usado por vez (maxChar, minChar ou charSize)."))
+        .andExpect(jsonPath("$.message").value(INVALID_PARAMS_ERROR_MESSAGE))
         .andExpect(jsonPath("$.status").value(400))
         .andExpect(jsonPath("$.path").value("/words"))
         .andExpect(jsonPath("$.timestamp").exists());
@@ -204,10 +204,7 @@ public class WordControllerTest {
     result
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$.error").value("Invalid parameter"))
-        .andExpect(
-            jsonPath("$.message")
-                .value(
-                    "Apenas um parâmetro de filtro pode ser usado por vez (maxChar, minChar ou charSize)."))
+        .andExpect(jsonPath("$.message").value(INVALID_PARAMS_ERROR_MESSAGE))
         .andExpect(jsonPath("$.status").value(400))
         .andExpect(jsonPath("$.path").value("/words"))
         .andExpect(jsonPath("$.timestamp").exists());
@@ -222,10 +219,7 @@ public class WordControllerTest {
     result
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$.error").value("Invalid parameter"))
-        .andExpect(
-            jsonPath("$.message")
-                .value(
-                    "Apenas um parâmetro de filtro pode ser usado por vez (maxChar, minChar ou charSize)."))
+        .andExpect(jsonPath("$.message").value(INVALID_PARAMS_ERROR_MESSAGE))
         .andExpect(jsonPath("$.status").value(400))
         .andExpect(jsonPath("$.path").value("/words"))
         .andExpect(jsonPath("$.timestamp").exists());
