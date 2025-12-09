@@ -20,19 +20,7 @@ public class WordController {
       @RequestParam(required = false, defaultValue = "0") int maxChar,
       @RequestParam(required = false, defaultValue = "0") int minChar,
       @RequestParam(required = false, defaultValue = "0") int charSize) {
-    if (maxChar > 0) {
-      WordDTO dto = new WordDTO(wordService.getRandomWordByMaxCharSize(maxChar));
-      return ResponseEntity.ok().body(dto);
-    }
-    if (minChar > 0) {
-      WordDTO dto = new WordDTO(wordService.getRandomWordByMinCharSize(minChar));
-      return ResponseEntity.ok().body(dto);
-    }
-    if (charSize > 0) {
-      WordDTO dto = new WordDTO(wordService.getRandomWordByEqualCharSize(charSize));
-      return ResponseEntity.ok().body(dto);
-    }
-    WordDTO dto = new WordDTO(wordService.getRandomWord());
+    WordDTO dto = new WordDTO(wordService.getWord(minChar, maxChar, charSize));
     return ResponseEntity.ok().body(dto);
   }
 }

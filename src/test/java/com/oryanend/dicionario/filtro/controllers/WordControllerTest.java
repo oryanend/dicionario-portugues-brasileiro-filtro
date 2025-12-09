@@ -63,7 +63,7 @@ public class WordControllerTest {
         .andExpect(jsonPath("$.error").value("Resource not found"))
         .andExpect(
             jsonPath("$.message")
-                .value("Não foi possível encontrar uma palavra com o tamanho máximo especificado."))
+                .value("Não foi possível encontrar uma palavra com o tamanho máximo especificado"))
         .andExpect(jsonPath("$.status").value(404))
         .andExpect(jsonPath("$.path").value("/words"))
         .andExpect(jsonPath("$.timestamp").exists());
@@ -96,7 +96,7 @@ public class WordControllerTest {
         .andExpect(jsonPath("$.error").value("Resource not found"))
         .andExpect(
             jsonPath("$.message")
-                .value("Não foi possível encontrar uma palavra com o tamanho máximo especificado."))
+                .value("Não foi possível encontrar uma palavra com o tamanho mínimo especificado"))
         .andExpect(jsonPath("$.status").value(404))
         .andExpect(jsonPath("$.path").value("/words"))
         .andExpect(jsonPath("$.timestamp").exists());
@@ -129,7 +129,7 @@ public class WordControllerTest {
         .andExpect(jsonPath("$.error").value("Resource not found"))
         .andExpect(
             jsonPath("$.message")
-                .value("Não foi possível encontrar uma palavra com o tamanho máximo especificado."))
+                .value("Não foi possível encontrar uma palavra com o tamanho especificado"))
         .andExpect(jsonPath("$.status").value(404))
         .andExpect(jsonPath("$.path").value("/words"))
         .andExpect(jsonPath("$.timestamp").exists());
