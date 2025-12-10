@@ -53,7 +53,7 @@ public class WordControllerTest {
 
   @Test
   public void getWordsMaxCharWhenMaxCharNotFoundShouldThrowNotFoundException() throws Exception {
-    int maxChar = 2;
+    int maxChar = 1;
 
     ResultActions result =
         mockMvc.perform(get("/words?maxChar=" + maxChar).accept(MediaType.APPLICATION_JSON));
@@ -86,7 +86,7 @@ public class WordControllerTest {
 
   @Test
   public void getWordsMinCharWhenMinCharNotFoundShouldThrowNotFoundException() throws Exception {
-    int minChar = 12;
+    int minChar = 120;
 
     ResultActions result =
         mockMvc.perform(get("/words?minChar=" + minChar).accept(MediaType.APPLICATION_JSON));
@@ -119,7 +119,7 @@ public class WordControllerTest {
 
   @Test
   public void getWordsCharSizeWhenCharSizeNotFoundShouldThrowNotFoundException() throws Exception {
-    int charSize = 12;
+    int charSize = 120;
 
     ResultActions result =
         mockMvc.perform(get("/words?charSize=" + charSize).accept(MediaType.APPLICATION_JSON));

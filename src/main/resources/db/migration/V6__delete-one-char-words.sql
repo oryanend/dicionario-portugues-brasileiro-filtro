@@ -1,0 +1,2 @@
+DELETE FROM words
+WHERE LENGTH(word) <= 1;
