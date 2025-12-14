@@ -14,6 +14,7 @@
         <property name="max" value="120"/>
     </module>
 
+    <module name="SuppressWarningsFilter" />
     <!-- Require Javadoc on public APIs -->
     <module name="TreeWalker">
         <module name="JavadocType"/>
@@ -34,5 +35,6 @@
             <property name="format" value="^[a-zA-Z][a-zA-Z_]*$"/>
         </module>
         <module name="AvoidStarImport"/> <!-- I found this very common in existing code, So I commented it out -->
+        <module name="SuppressWarningsHolder" />
     </module>
 </module>
