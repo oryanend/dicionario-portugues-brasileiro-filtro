@@ -35,6 +35,17 @@ public class StatusController {
     return response;
   }
 
+  private double measureQueryLatency(Connection conn) throws Exception {
+    long start = System.nanoTime();
+
+    try (var stmt = conn.prepareStatement("SELECT 1")) {
+      stmt.execute();
+    }
+
+    long end = System.nanoTime();
+    return (end - start) / 1_000_000.0; // ms
+  }
+
   private Map<String, Object> getDatabaseInfo() {
     Map<String, Object> dbInfo = new LinkedHashMap<>();
 
@@ -50,6 +61,13 @@ public class StatusController {
       } else {
         dbInfo.put("opened_connections", null);
       }
+
+      Map<String, Object> latency = new LinkedHashMap<>();
+      latency.put("first_query", measureQueryLatency(conn));
+      latency.put("second_query", measureQueryLatency(conn));
+      latency.put("third_query", measureQueryLatency(conn));
+
+      dbInfo.put("latency", latency);
 
     } catch (Exception e) {
       dbInfo.put("status", "down");
