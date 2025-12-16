@@ -1,6 +1,6 @@
 package com.oryanend.dicionario.filtro.services;
 
-import com.oryanend.dicionario.filtro.entities.Word;
+import com.oryanend.dicionario.filtro.projections.WordProjection;
 import com.oryanend.dicionario.filtro.repositories.WordRepository;
 import com.oryanend.dicionario.filtro.services.exceptions.InvalidParameterException;
 import com.oryanend.dicionario.filtro.services.exceptions.ResourceNotFoundException;
@@ -14,7 +14,7 @@ public class WordService {
   @Autowired private WordRepository repository;
 
   @Transactional(readOnly = true)
-  public Word getWord(Integer minChar, Integer maxChar, Integer charSize) {
+  public WordProjection getWord(Integer minChar, Integer maxChar, Integer charSize) {
     if (minChar > 0 && maxChar > 0 && minChar > maxChar) {
       throw new InvalidParameterException(
           "O valor mínimo de caracteres não pode ser maior que o valor máximo");

@@ -1,6 +1,7 @@
 package com.oryanend.dicionario.filtro.dto;
 
 import com.oryanend.dicionario.filtro.entities.Word;
+import com.oryanend.dicionario.filtro.projections.WordProjection;
 
 public class WordDTO {
   private String word;
@@ -12,6 +13,10 @@ public class WordDTO {
   }
 
   public WordDTO(Word entity) {
+    this.word = entity.getWord();
+  }
+
+  public WordDTO(WordProjection entity) {
     this.word = entity.getWord();
   }
 
