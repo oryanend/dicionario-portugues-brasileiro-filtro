@@ -1,5 +1,6 @@
 package com.oryanend.dicionario.filtro.controllers;
 
+import com.oryanend.dicionario.filtro.config.CommitInfo;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.time.Instant;
@@ -11,14 +12,11 @@ import java.util.Map;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.health.HealthEndpoint;
-import org.springframework.boot.info.GitProperties;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@PropertySource(value = "classpath:git.properties", ignoreResourceNotFound = true)
 @RestController
 @RequestMapping("/status")
 public class StatusController {
@@ -26,7 +24,7 @@ public class StatusController {
 
   @Autowired private Environment springEnv;
 
-  @Autowired private GitProperties gitProperties;
+  @Autowired private CommitInfo commitInfo;
 
   @Autowired private HealthEndpoint healthEndpoint;
 
@@ -98,18 +96,18 @@ public class StatusController {
     String status = healthEndpoint.health().getStatus().getCode().equals("UP") ? "healthy" : "down";
 
     String[] activeProfiles = springEnv.getActiveProfiles();
-    String environment = (activeProfiles.length > 0) ? activeProfiles[0] : "dev";
+    String environment = (activeProfiles.length > 0) ? activeProfiles[0] : "default";
 
     webInfo.put("status", status);
     webInfo.put("version", org.springframework.boot.SpringBootVersion.getVersion());
     webInfo.put("provider", (System.getenv("RENDER") != null) ? "Render" : "local");
     webInfo.put("environment", environment);
 
-    if (gitProperties != null) {
-      webInfo.put("last_commit_date", gitProperties.getCommitTime());
-      webInfo.put("last_commit_sha", gitProperties.getShortCommitId());
-      webInfo.put("last_commit_author", gitProperties.get("commit.user.name"));
-      webInfo.put("last_commit_message", gitProperties.get("commit.message.full"));
+    if (commitInfo.isAvailable()) {
+      webInfo.put("last_commit_date", commitInfo.getCommitTime());
+      webInfo.put("last_commit_sha", commitInfo.getCommitId());
+      webInfo.put("last_commit_author", commitInfo.getCommitAuthor());
+      webInfo.put("last_commit_message", commitInfo.getCommitMessage());
     } else {
       webInfo.put("git_info", "Not available (build outside git or plugin missing)");
     }
