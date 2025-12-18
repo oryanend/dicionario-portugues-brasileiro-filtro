@@ -29,6 +29,14 @@ public class StatusControllerTest {
     result
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.updated_at").exists())
+        .andExpect(jsonPath("$.dependencies").exists());
+  }
+
+  @Test
+  public void getStatusShouldReturnDependenciesDatabase() throws Exception {
+    ResultActions result = mockMvc.perform(get("/status").accept(MediaType.APPLICATION_JSON));
+
+    result
         .andExpect(jsonPath("$.dependencies.database.status").value("healthy"))
         .andExpect(jsonPath("$.dependencies.database.version").value("2.3.232"))
         .andExpect(jsonPath("$.dependencies.database.max_connections").isNumber())
@@ -37,5 +45,20 @@ public class StatusControllerTest {
         .andExpect(jsonPath("$.dependencies.database.latency.first_query").isNumber())
         .andExpect(jsonPath("$.dependencies.database.latency.second_query").isNumber())
         .andExpect(jsonPath("$.dependencies.database.latency.third_query").isNumber());
+  }
+
+  @Test
+  public void getStatusShouldReturnDependenciesWebserver() throws Exception {
+    ResultActions result = mockMvc.perform(get("/status").accept(MediaType.APPLICATION_JSON));
+
+    result
+        .andExpect(jsonPath("$.dependencies.webserver.status").value("healthy"))
+        .andExpect(jsonPath("$.dependencies.webserver.version").value("3.5.7"))
+        .andExpect(jsonPath("$.dependencies.webserver.provider").exists())
+        .andExpect(jsonPath("$.dependencies.webserver.environment").exists())
+        .andExpect(jsonPath("$.dependencies.webserver.last_commit_date").exists())
+        .andExpect(jsonPath("$.dependencies.webserver.last_commit_sha").exists())
+        .andExpect(jsonPath("$.dependencies.webserver.last_commit_author").exists())
+        .andExpect(jsonPath("$.dependencies.webserver.last_commit_message").exists());
   }
 }
