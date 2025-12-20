@@ -1,5 +1,6 @@
 package com.oryanend.dicionario.filtro.controllers;
 
+import com.oryanend.dicionario.filtro.config.CommitInfo;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.time.Instant;
@@ -9,6 +10,9 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.sql.DataSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.health.HealthEndpoint;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/status")
 public class StatusController {
   private DataSource dataSource;
+
+  @Autowired private Environment springEnv;
+
+  @Autowired private CommitInfo commitInfo;
+
+  @Autowired private HealthEndpoint healthEndpoint;
 
   public StatusController(DataSource dataSource) {
     this.dataSource = dataSource;
@@ -30,6 +40,7 @@ public class StatusController {
 
     Map<String, Object> dependencies = new HashMap<>();
     dependencies.put("database", getDatabaseInfo());
+    dependencies.put("webserver", getWebServerInfo());
 
     response.put("dependencies", dependencies);
     return response;
@@ -52,7 +63,9 @@ public class StatusController {
     try (Connection conn = dataSource.getConnection()) {
       DatabaseMetaData meta = conn.getMetaData();
 
-      dbInfo.put("status", "healthy");
+      String status = (conn.isValid(2)) ? "healthy" : "unstable";
+
+      dbInfo.put("status", status);
       dbInfo.put("version", meta.getDatabaseProductVersion().replaceAll("\\s*\\(.*?\\)", ""));
       dbInfo.put("max_connections", meta.getMaxConnections());
 
@@ -75,5 +88,30 @@ public class StatusController {
     }
 
     return dbInfo;
+  }
+
+  private Map<String, Object> getWebServerInfo() {
+    Map<String, Object> webInfo = new LinkedHashMap<>();
+
+    String status = healthEndpoint.health().getStatus().getCode().equals("UP") ? "healthy" : "down";
+
+    String[] activeProfiles = springEnv.getActiveProfiles();
+    String environment = (activeProfiles.length > 0) ? activeProfiles[0] : "default";
+
+    webInfo.put("status", status);
+    webInfo.put("version", org.springframework.boot.SpringBootVersion.getVersion());
+    webInfo.put("provider", (System.getenv("RENDER") != null) ? "Render" : "local");
+    webInfo.put("environment", environment);
+
+    if (commitInfo.isAvailable()) {
+      webInfo.put("last_commit_date", commitInfo.getCommitTime());
+      webInfo.put("last_commit_sha", commitInfo.getCommitId());
+      webInfo.put("last_commit_author", commitInfo.getCommitAuthor());
+      webInfo.put("last_commit_message", commitInfo.getCommitMessage());
+    } else {
+      webInfo.put("git_info", "Not available (build outside git or plugin missing)");
+    }
+
+    return webInfo;
   }
 }
