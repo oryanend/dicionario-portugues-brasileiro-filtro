@@ -21,10 +21,11 @@ import org.springframework.test.web.servlet.ResultActions;
 public class StatusControllerTest {
 
   @Autowired private MockMvc mockMvc;
+  String baseUrl = "/api/v1/status";
 
   @Test
   public void getStatusShouldReturnStatusCodeOK() throws Exception {
-    ResultActions result = mockMvc.perform(get("/status").accept(MediaType.APPLICATION_JSON));
+    ResultActions result = mockMvc.perform(get(baseUrl).accept(MediaType.APPLICATION_JSON));
 
     result
         .andExpect(status().isOk())
@@ -34,7 +35,7 @@ public class StatusControllerTest {
 
   @Test
   public void getStatusShouldReturnDependenciesDatabase() throws Exception {
-    ResultActions result = mockMvc.perform(get("/status").accept(MediaType.APPLICATION_JSON));
+    ResultActions result = mockMvc.perform(get(baseUrl).accept(MediaType.APPLICATION_JSON));
 
     result
         .andExpect(jsonPath("$.dependencies.database.status").value("healthy"))
@@ -49,7 +50,7 @@ public class StatusControllerTest {
 
   @Test
   public void getStatusShouldReturnDependenciesWebserver() throws Exception {
-    ResultActions result = mockMvc.perform(get("/status").accept(MediaType.APPLICATION_JSON));
+    ResultActions result = mockMvc.perform(get(baseUrl).accept(MediaType.APPLICATION_JSON));
 
     result
         .andExpect(jsonPath("$.dependencies.webserver.status").value("healthy"))

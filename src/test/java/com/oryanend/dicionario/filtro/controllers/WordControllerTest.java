@@ -24,10 +24,11 @@ import org.springframework.test.web.servlet.ResultActions;
 public class WordControllerTest {
 
   @Autowired private MockMvc mockMvc;
+  String baseUrl = "/api/v1/words";
 
   @Test
   public void getWordsShouldReturnRandomWord() throws Exception {
-    ResultActions result = mockMvc.perform(get("/words").accept(MediaType.APPLICATION_JSON));
+    ResultActions result = mockMvc.perform(get(baseUrl).accept(MediaType.APPLICATION_JSON));
 
     result
         .andExpect(status().isOk())
@@ -41,7 +42,7 @@ public class WordControllerTest {
     int maxChar = 6;
 
     ResultActions result =
-        mockMvc.perform(get("/words?maxChar=" + maxChar).accept(MediaType.APPLICATION_JSON));
+        mockMvc.perform(get(baseUrl + "?maxChar=" + maxChar).accept(MediaType.APPLICATION_JSON));
 
     result
         .andExpect(status().isOk())
@@ -56,7 +57,7 @@ public class WordControllerTest {
     int maxChar = 1;
 
     ResultActions result =
-        mockMvc.perform(get("/words?maxChar=" + maxChar).accept(MediaType.APPLICATION_JSON));
+        mockMvc.perform(get(baseUrl + "?maxChar=" + maxChar).accept(MediaType.APPLICATION_JSON));
 
     result
         .andExpect(status().isNotFound())
@@ -65,7 +66,7 @@ public class WordControllerTest {
             jsonPath("$.message")
                 .value("Não foi possível encontrar uma palavra com o tamanho máximo especificado"))
         .andExpect(jsonPath("$.status").value(404))
-        .andExpect(jsonPath("$.path").value("/words"))
+        .andExpect(jsonPath("$.path").value(baseUrl))
         .andExpect(jsonPath("$.timestamp").exists());
   }
 
@@ -74,7 +75,7 @@ public class WordControllerTest {
     int minChar = 7;
 
     ResultActions result =
-        mockMvc.perform(get("/words?minChar=" + minChar).accept(MediaType.APPLICATION_JSON));
+        mockMvc.perform(get(baseUrl + "?minChar=" + minChar).accept(MediaType.APPLICATION_JSON));
 
     result
         .andExpect(status().isOk())
@@ -89,7 +90,7 @@ public class WordControllerTest {
     int minChar = 120;
 
     ResultActions result =
-        mockMvc.perform(get("/words?minChar=" + minChar).accept(MediaType.APPLICATION_JSON));
+        mockMvc.perform(get(baseUrl + "?minChar=" + minChar).accept(MediaType.APPLICATION_JSON));
 
     result
         .andExpect(status().isNotFound())
@@ -98,7 +99,7 @@ public class WordControllerTest {
             jsonPath("$.message")
                 .value("Não foi possível encontrar uma palavra com o tamanho mínimo especificado"))
         .andExpect(jsonPath("$.status").value(404))
-        .andExpect(jsonPath("$.path").value("/words"))
+        .andExpect(jsonPath("$.path").value(baseUrl))
         .andExpect(jsonPath("$.timestamp").exists());
   }
 
@@ -107,7 +108,7 @@ public class WordControllerTest {
     int charSize = 7;
 
     ResultActions result =
-        mockMvc.perform(get("/words?charSize=" + charSize).accept(MediaType.APPLICATION_JSON));
+        mockMvc.perform(get(baseUrl + "?charSize=" + charSize).accept(MediaType.APPLICATION_JSON));
 
     result
         .andExpect(status().isOk())
@@ -122,7 +123,7 @@ public class WordControllerTest {
     int charSize = 120;
 
     ResultActions result =
-        mockMvc.perform(get("/words?charSize=" + charSize).accept(MediaType.APPLICATION_JSON));
+        mockMvc.perform(get(baseUrl + "?charSize=" + charSize).accept(MediaType.APPLICATION_JSON));
 
     result
         .andExpect(status().isNotFound())
@@ -131,7 +132,7 @@ public class WordControllerTest {
             jsonPath("$.message")
                 .value("Não foi possível encontrar uma palavra com o tamanho especificado"))
         .andExpect(jsonPath("$.status").value(404))
-        .andExpect(jsonPath("$.path").value("/words"))
+        .andExpect(jsonPath("$.path").value(baseUrl))
         .andExpect(jsonPath("$.timestamp").exists());
   }
 
@@ -143,7 +144,7 @@ public class WordControllerTest {
 
     ResultActions result =
         mockMvc.perform(
-            get("/words?minChar=" + minChar + "&maxChar=" + maxChar)
+            get(baseUrl + "?minChar=" + minChar + "&maxChar=" + maxChar)
                 .accept(MediaType.APPLICATION_JSON));
 
     result
@@ -153,7 +154,7 @@ public class WordControllerTest {
             jsonPath("$.message")
                 .value("O valor mínimo de caracteres não pode ser maior que o valor máximo"))
         .andExpect(jsonPath("$.status").value(400))
-        .andExpect(jsonPath("$.path").value("/words"))
+        .andExpect(jsonPath("$.path").value(baseUrl))
         .andExpect(jsonPath("$.timestamp").exists());
   }
 
@@ -165,7 +166,7 @@ public class WordControllerTest {
 
     ResultActions result =
         mockMvc.perform(
-            get("/words?charSize=" + charSize + "&minChar=" + minChar)
+            get(baseUrl + "?charSize=" + charSize + "&minChar=" + minChar)
                 .accept(MediaType.APPLICATION_JSON));
 
     result
@@ -175,7 +176,7 @@ public class WordControllerTest {
             jsonPath("$.message")
                 .value("Os valores não podem ser combinados, charSize deve ser usado sozinho"))
         .andExpect(jsonPath("$.status").value(400))
-        .andExpect(jsonPath("$.path").value("/words"))
+        .andExpect(jsonPath("$.path").value(baseUrl))
         .andExpect(jsonPath("$.timestamp").exists());
   }
 
@@ -187,7 +188,7 @@ public class WordControllerTest {
 
     ResultActions result =
         mockMvc.perform(
-            get("/words?charSize=" + charSize + "&maxChar=" + maxChar)
+            get(baseUrl + "?charSize=" + charSize + "&maxChar=" + maxChar)
                 .accept(MediaType.APPLICATION_JSON));
 
     result
@@ -197,7 +198,7 @@ public class WordControllerTest {
             jsonPath("$.message")
                 .value("Os valores não podem ser combinados, charSize deve ser usado sozinho"))
         .andExpect(jsonPath("$.status").value(400))
-        .andExpect(jsonPath("$.path").value("/words"))
+        .andExpect(jsonPath("$.path").value(baseUrl))
         .andExpect(jsonPath("$.timestamp").exists());
   }
 
@@ -210,7 +211,7 @@ public class WordControllerTest {
 
     ResultActions result =
         mockMvc.perform(
-            get("/words?charSize=" + charSize + "&minChar=" + minChar + "&maxChar=" + maxChar)
+            get(baseUrl + "?charSize=" + charSize + "&minChar=" + minChar + "&maxChar=" + maxChar)
                 .accept(MediaType.APPLICATION_JSON));
 
     result
@@ -220,7 +221,7 @@ public class WordControllerTest {
             jsonPath("$.message")
                 .value("Os valores não podem ser combinados, charSize deve ser usado sozinho"))
         .andExpect(jsonPath("$.status").value(400))
-        .andExpect(jsonPath("$.path").value("/words"))
+        .andExpect(jsonPath("$.path").value(baseUrl))
         .andExpect(jsonPath("$.timestamp").exists());
   }
 
@@ -231,7 +232,7 @@ public class WordControllerTest {
 
     ResultActions result =
         mockMvc.perform(
-            get("/words?minChar=" + minChar + "&maxChar=" + maxChar)
+            get(baseUrl + "?minChar=" + minChar + "&maxChar=" + maxChar)
                 .accept(MediaType.APPLICATION_JSON));
 
     result
