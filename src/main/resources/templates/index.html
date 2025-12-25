@@ -67,10 +67,10 @@
             Acessando o WebService
         </h2>
         <p>
-            Para acessar o WebService, sem utilizar filtros, você deve acessar o endpoint <code>/words</code>.<br><br>
+            Para acessar o WebService, sem utilizar filtros, você deve acessar o endpoint <code>/api/v1/words</code>.<br><br>
             Exemplo de consulta de palavra aleatória:<br>
-            <a th:href="${baseUrl + '/words'}"
-               th:text="${displayBaseUrl + '/words'}"></a>
+            <a th:href="${baseUrl + '/api/v1/words'}"
+               th:text="${displayBaseUrl + '/api/v1/words'}"></a>
         </p>
     </div>
     <div class="p-3">
@@ -81,8 +81,8 @@
         <p><code>?charSize</code>  - Retorna uma palavra aleatória contendo os caracteres desejados</p>
         <div class="p-3 border rounded-2 w-75" style="background: #DCDFA9;">
             <div class="d-flex justify-content-end">
-                <a th:href="${baseUrl + '/words?charSize=5'}"
-                   th:text="${displayBaseUrl + '/words?charSize=5'}">
+                <a th:href="${baseUrl + '/api/v1/words?charSize=5'}"
+                   th:text="${displayBaseUrl + '/api/v1/words?charSize=5'}">
                 </a>
             </div>
             <p>"word": "amigo"</p>
@@ -91,16 +91,16 @@
         <p><code>?maxChar</code>  - Retorna uma palavra aleatória contendo o máximo de caracteres</p>
         <div class="p-3 border rounded-2 w-75" style="background: #DCDFA9;">
             <div class="d-flex justify-content-end">
-                <a th:href="${baseUrl + '/words?maxChar=4'}"
-                   th:text="${displayBaseUrl + '/words?maxChar=4'}">
+                <a th:href="${baseUrl + '/api/v1/words?maxChar=4'}"
+                   th:text="${displayBaseUrl + '/api/v1/words?maxChar=4'}">
                 </a>
             </div>
             <p>"word": "cão"</p>
         </div> <br>
         <div class="p-3 border rounded-2 w-75" style="background: #DCDFA9;">
             <div class="d-flex justify-content-end">
-                <a th:href="${baseUrl + '/words?maxChar=2'}"
-                   th:text="${displayBaseUrl + '/words?maxChar=2'}">
+                <a th:href="${baseUrl + '/api/v1/words?maxChar=2'}"
+                   th:text="${displayBaseUrl + '/api/v1/words?maxChar=2'}">
                 </a>
             </div>
             <p>"word": "lã"</p>
@@ -108,16 +108,16 @@
         <p><code>?minChar</code>  - Retorna uma palavra aleatória contendo o minimo de caracteres</p>
         <div class="p-3 border rounded-2 w-75" style="background: #DCDFA9;">
             <div class="d-flex justify-content-end">
-                <a th:href="${baseUrl + '/words?minChar=4'}"
-                   th:text="${displayBaseUrl + '/words?minChar=4'}">
+                <a th:href="${baseUrl + '/api/v1/words?minChar=4'}"
+                   th:text="${displayBaseUrl + '/api/v1/words?minChar=4'}">
                 </a>
             </div>
             <p>"word": "avião"</p>
         </div> <br>
         <div class="p-3 border rounded-2 w-75" style="background: #DCDFA9;">
             <div class="d-flex justify-content-end">
-                <a th:href="${baseUrl + '/words?minChar=2'}"
-                   th:text="${displayBaseUrl + '/words?minChar=2'}">
+                <a th:href="${baseUrl + '/api/v1/words?minChar=2'}"
+                   th:text="${displayBaseUrl + '/api/v1/words?minChar=2'}">
                 </a>
             </div>
             <p>"word": "cavaco"</p>
@@ -129,8 +129,8 @@
             Alguns filtros podem ser combinados com a utilização do caractere <code>&</code>.
             Exemplo: <code>?minChar</code> e <code>?maxChar</code> podem ser combinados, ficando assim
             <code>
-                <a target="_blank" th:href="${baseUrl + '/words?minChar=2&maxChar=4'}"
-                   th:text="${displayBaseUrl + '/words?minChar=2&maxChar=4'}">
+                <a target="_blank" th:href="${baseUrl + '/api/v1/words?minChar=2&maxChar=4'}"
+                   th:text="${displayBaseUrl + '/api/v1/words?minChar=2&maxChar=4'}">
                 </a>
             </code>.
             Dessa forma, o WebService retornará uma palavra entre 2 e 4 letras.
@@ -165,7 +165,7 @@
             </div>
             <div class="col-12 col-md-6">
                 <nav class="nav nav-footer justify-content-center justify-content-md-end">
-                    <a class="nav-link active ps-0" th:href="${baseUrl + '/status'}">
+                    <a class="nav-link active ps-0" th:href="${baseUrl + '/api/v1/status'}">
                         Status
                     </a>
                     <a class="nav-link" href="https://github.com/oryanend"  target="_blank">GitHub </a>
