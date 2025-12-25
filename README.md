@@ -23,12 +23,12 @@ Os endpoints não são muito complexos, sendo eles:
 
 | Endpoint                             | Visão geral                                                                 |
 | ------------------------------------ | ---------------------------------------------------------------------------- |
-| **GET** `/words`                     | Retorna uma palavra aleatória                                               |
-| **GET** `/words?charSize=x`          | Retorna uma palavra aleatória contendo `x` caracteres                        |
-| **GET** `/words?minChar=x`           | Retorna uma palavra aleatória contendo no mínimo `x` caracteres            |
-| **GET** `/words?maxChar=x`           | Retorna uma palavra aleatória contendo no máximo `x` caracteres             |
-| **GET** `/words?minChar=x&minChar=y` | Retorna uma palavra aleatória cujo tamanho esteja entre `x` e `y` caracteres |
-| **GET** `/status` | Retorna os status do sistema |
+| **GET** `/api/v1/words`                     | Retorna uma palavra aleatória                                               |
+| **GET** `/api/v1/words?charSize=x`          | Retorna uma palavra aleatória contendo `x` caracteres                        |
+| **GET** `/api/v1/words?minChar=x`           | Retorna uma palavra aleatória contendo no mínimo `x` caracteres            |
+| **GET** `/api/v1/words?maxChar=x`           | Retorna uma palavra aleatória contendo no máximo `x` caracteres             |
+| **GET** `/api/v1/words?minChar=x&minChar=y` | Retorna uma palavra aleatória cujo tamanho esteja entre `x` e `y` caracteres |
+| **GET** `/api/v1/status` | Retorna os status do sistema |
 
 ## 💻 Tecnologias utilizadas
 
