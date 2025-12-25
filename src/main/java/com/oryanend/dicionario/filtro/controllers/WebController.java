@@ -14,22 +14,7 @@ public class WebController {
 
   @GetMapping("/")
   public String showHomePage(HttpServletRequest request, Model model) {
-
-    String scheme = request.getScheme();
-    String serverName = request.getServerName();
-    int serverPort = request.getServerPort();
-
-    String baseUrl =
-        scheme
-            + "://"
-            + serverName
-            + ((serverPort == 80 || serverPort == 443) ? "" : ":" + serverPort);
-
-    String displayBaseUrl = baseUrl.replace("http://", "").replace("https://", "");
-
-    model.addAttribute("baseUrl", baseUrl);
-    model.addAttribute("displayBaseUrl", displayBaseUrl);
-    return "index";
+    return urlConfig(request, model, "index");
   }
 
   @GetMapping("/status")
@@ -58,6 +43,25 @@ public class WebController {
     model.addAttribute("webEnvironment", webserver.get("environment"));
     model.addAttribute("webVersion", webserver.get("version"));
 
-    return "status";
+    return urlConfig(request, model, "status");
+  }
+
+  private String urlConfig(HttpServletRequest request, Model model, String page) {
+    String scheme = request.getScheme();
+    String serverName = request.getServerName();
+    int serverPort = request.getServerPort();
+
+    String baseUrl =
+            scheme
+                    + "://"
+                    + serverName
+                    + ((serverPort == 80 || serverPort == 443) ? "" : ":" + serverPort);
+
+    String displayBaseUrl = baseUrl.replace("http://", "").replace("https://", "");
+
+    model.addAttribute("baseUrl", baseUrl);
+    model.addAttribute("displayBaseUrl", displayBaseUrl);
+
+    return page;
   }
 }

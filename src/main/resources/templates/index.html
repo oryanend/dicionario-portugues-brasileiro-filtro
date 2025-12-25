@@ -40,7 +40,7 @@
 <body>
 <nav class="p-2" style="background-color: #F3B61DFF;">
     <div class="container">
-        <a class="navbar-brand d-flex align-items-center gap-3" href="#">
+        <a class="navbar-brand d-flex align-items-center gap-3" th:href="${baseUrl + '/'}">
             <img src="/docs/dicionario-icon/logo-words-80px.png"
                  alt="Logo"
                  width="60"
@@ -165,7 +165,7 @@
             </div>
             <div class="col-12 col-md-6">
                 <nav class="nav nav-footer justify-content-center justify-content-md-end">
-                    <a class="nav-link active ps-0" th:href="${baseUrl + '/api/v1/status'}">
+                    <a class="nav-link active ps-0" th:href="${baseUrl + '/status'}">
                         Status
                     </a>
                     <a class="nav-link" href="https://github.com/oryanend"  target="_blank">GitHub </a>
